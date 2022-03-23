@@ -31,16 +31,16 @@ public class UserDB {
 
     public boolean insert(User user) throws Exception {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        EntityTransaction et = em.getTransaction();
+        EntityTransaction trans = em.getTransaction();
         
         try {
-            et.begin();
+            trans.begin();
             em.persist(user);
             em.merge(user);
-            et.commit();
+            trans.commit();
             return true;
         } catch (Exception ex) {
-            et.rollback();
+            trans.rollback();
             return false;
         } finally {
             em.close();
@@ -49,15 +49,15 @@ public class UserDB {
 
     public boolean update(User user) throws Exception {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        EntityTransaction et = em.getTransaction();
+        EntityTransaction trans = em.getTransaction();
         
         try {
-            et.begin();
+            trans.begin();
             em.merge(user);
-            et.commit();
+            trans.commit();
             return true;
         } catch (Exception ex) {
-            et.rollback();
+            trans.rollback();
             return false;
         } finally {
             em.close();
@@ -66,15 +66,15 @@ public class UserDB {
 
     public boolean delete(User user) throws Exception {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        EntityTransaction et = em.getTransaction();
+        EntityTransaction trans = em.getTransaction();
         
         try {
-            et.begin();
+            trans.begin();
             em.remove(em.merge(user));
-            et.commit();
+            trans.commit();
             return true;
         } catch (Exception ex) {
-            et.rollback();
+            trans.rollback();
             return false;
         } finally {
             em.close();

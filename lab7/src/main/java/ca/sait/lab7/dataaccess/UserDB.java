@@ -1,6 +1,5 @@
 package ca.sait.lab7.dataaccess;
 
-
 import ca.sait.lab7.models.User;
 import java.util.List;
 import javax.persistence.*;
@@ -12,16 +11,16 @@ public class UserDB {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
         
         try {
-            Query query = em.createQuery("User.findAll");
+            Query query = em.createNamedQuery("User.findAll");
             return query.getResultList();
         } finally {
             em.close();
         }
     }
-    
 
     public User get(String email) throws Exception {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
+        
         try {
             User user = em.find(User.class, email);
             return user;
@@ -32,16 +31,16 @@ public class UserDB {
 
     public boolean insert(User user) throws Exception {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        EntityTransaction trans = em.getTransaction();
+        EntityTransaction et = em.getTransaction();
         
         try {
-            trans.begin();
+            et.begin();
             em.persist(user);
             em.merge(user);
-            trans.commit();
+            et.commit();
             return true;
         } catch (Exception ex) {
-            trans.rollback();
+            et.rollback();
             return false;
         } finally {
             em.close();
@@ -50,15 +49,15 @@ public class UserDB {
 
     public boolean update(User user) throws Exception {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        EntityTransaction trans = em.getTransaction();
+        EntityTransaction et = em.getTransaction();
         
         try {
-            trans.begin();
+            et.begin();
             em.merge(user);
-            trans.commit();
+            et.commit();
             return true;
         } catch (Exception ex) {
-            trans.rollback();
+            et.rollback();
             return false;
         } finally {
             em.close();
@@ -67,16 +66,15 @@ public class UserDB {
 
     public boolean delete(User user) throws Exception {
         EntityManager em = DBUtil.getEmFactory().createEntityManager();
-        EntityTransaction trans = em.getTransaction();
+        EntityTransaction et = em.getTransaction();
         
         try {
-            trans.begin();
+            et.begin();
             em.remove(em.merge(user));
-            em.merge(user);
-            trans.commit();
+            et.commit();
             return true;
         } catch (Exception ex) {
-            trans.rollback();
+            et.rollback();
             return false;
         } finally {
             em.close();

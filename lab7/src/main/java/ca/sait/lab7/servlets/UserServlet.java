@@ -30,22 +30,17 @@ public class UserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
         try {
             UserService userService = new UserService();
             List<User> users = userService.getAll();
             RoleService roleService = new RoleService();
-            List<Role> roles = roleService.getAll();
-            
+            List<Role> roles = roleService.getAll();           
             request.setAttribute("users", users);
-            request.setAttribute("roles", roles);
-            
+            request.setAttribute("roles", roles);           
             this.getServletContext().getRequestDispatcher("/WEB-INF/users.jsp").forward(request, response);
         } catch (Exception ex) {
             Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        } 
     }
 
     /**
@@ -61,11 +56,9 @@ public class UserServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
         request.setAttribute("message", "");
-        
-        // Add a user to the database
-        if (action != null && action.equals("add")) {
-            
+        if (action != null && action.equals("add")) {  
             try {
+
                 String email = request.getParameter("email");
                 boolean active = request.getParameter("active") != null;
                 String firstName = request.getParameter("firstName");
@@ -83,9 +76,11 @@ public class UserServlet extends HttpServlet {
                         roleId = role.getId();
                     }
                 }
+
                 if (roleId == 0) {
                     throw new Exception("Invalid role");
                 }
+
                 Role role = new Role(roleId, roleName);
                 UserService userService = new UserService();
                 userService.insert(email, active, firstName, lastName, password, role);
@@ -97,7 +92,6 @@ public class UserServlet extends HttpServlet {
             }
         
         } else if (action != null && action.contains("edit?")) {
-            
             try {
                 String email = action.split("\\?", 2)[1];
                 UserService userService = new UserService();
@@ -107,9 +101,7 @@ public class UserServlet extends HttpServlet {
                 Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
             }  
         } else if (action != null && action.equals("edit")) {
-            
             try {
-
                 String email = request.getParameter("email");
                 boolean active = request.getParameter("active") != null;
                 String firstName = request.getParameter("firstName");

@@ -17,16 +17,17 @@ public class User implements Serializable {
     private String email;
     @Column
     private boolean active;
-    @Column (name = "first_name")
+    @Column(name = "first_name")
     private String firstName;
-    @Column (name = "last_name")
+    @Column(name = "last_name")
     private String lastName;
     @Column
     private String password;
+    
     @ManyToOne(targetEntity = Role.class)
     @JoinColumn(name = "role", referencedColumnName = "role_id")
     private Role role;
-    
+
     public User() {
     }
 

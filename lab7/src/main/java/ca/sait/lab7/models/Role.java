@@ -2,24 +2,21 @@
 package ca.sait.lab7.models;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "role")
 @NamedQueries({
     @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
 })
-
 public class Role implements Serializable {
     @Id
     @Basic
-    @Column(name= "role_id")
+    @Column(name = "role_id")
     private int id;
     
-    @Id
-    @Basic
-    @Column(name= "role_name")
+    @Column(name = "role_name")
     private String name;
     
     @OneToMany

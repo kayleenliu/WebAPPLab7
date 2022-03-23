@@ -79,8 +79,8 @@ public class UserServlet extends HttpServlet {
                 roleList = roleService.getAll();
 
                 for (Role role : roleList) {
-                    if (role.getName().equals(roleName)) {
-                        roleId = role.getId();
+                    if (role.getRoleName().equals(roleName)) {
+                        roleId = role.getRoleId();
                     }
                 }
                 if (roleId == 0) {
@@ -123,8 +123,8 @@ public class UserServlet extends HttpServlet {
                 roleList = roleService.getAll();
 
                 for (Role role : roleList) {
-                    if (role.getName().equals(roleName)) {
-                        roleId = role.getId();
+                    if (role.getRoleName().equals(roleName)) {
+                        roleId = role.getRoleId();
                     }
                 }
 
